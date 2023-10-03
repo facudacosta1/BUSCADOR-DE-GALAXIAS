@@ -1,13 +1,8 @@
-main {
-    min-height: calc(100vh - 160px);
-  }
 
 .info-container{
   border: 1px solid black;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(248, 245, 245);
   border-radius: 10px;
-  margin-bottom: 20px;
-  padding: 50px;
   text-align: center;
 }
 

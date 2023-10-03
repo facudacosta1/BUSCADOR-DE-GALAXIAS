@@ -1,63 +1,4 @@
-/*
-const BASEURL= 'https://images-api.nasa.gov/search?q=';
 
-const contenedor = document.getElementById('contenedor');
-const form = document.getElementById('form');
-
-let jsonData;
-
-function setBusqueda() {
-    let busqueda = document.getElementById('inputBuscar').value ;
-    localStorage.setItem('busqueda', busqueda);
-}
-
-form.addEventListener('submit',function(e){
-    setBusqueda();
-    let searchTerm = localStorage.getItem('busqueda');
-    const url = `https://images-api.nasa.gov/search?q=${searchTerm}`;
-    
-        try {
-            const response =  fetch(url);
-            if(!response.ok){
-                throw new Error('Error fetching')
-            }
-            jsonData =  response.json();
-            const elementos = jsonData.collection.items;
-        
-            elementos.forEach(elemento=>{
-                let content='';
-                const metaData = elemento.data[0];
-                const imageUrl = elemento.links[0].href;
-                content += `
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="${imageUrl}" class="card-img-top" alt="${metaData.title}">
-                        <div class="card-body">
-                            <h5 class="card-title">${metaData.title}</h5>
-                            <p class="card-text">${metaData.description}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-muted">Fecha: ${metaData.date_created}</small>
-                    </div>
-                    </div>
-                </div>
-                
-                `
-                contenedor.innerHTML = content;
-
-
-            })
-    
-            } catch (error) {
-            console.error('Error:', error);
-            
-        }
-
-
-
-})
-
-
-*/
 
 const contenedor = document.getElementById('contenedor');
 const inputBuscar = document.getElementById('inputBuscar');
@@ -77,14 +18,14 @@ btnBuscar.addEventListener('click',function(e){
                 const imageUrl = elemento.links[0].href;
                 content += `
                 <div>
-                    <div class="info-container">
+                    <div class="info-container w-auto container-fluid mb-5 mt-2 p-3">
                         <img class="w-100" src="${imageUrl}" alt="${metaData.title}">
                         <div>
                             <h5>${metaData.title}</h5>
                             <p>${metaData.description}</p>
                         <div>
                         <small>Fecha: ${metaData.date_created}</small> <br>
-                        <button class="btn btn-success">Comprar artículo</button>
+                        <button class="btn btn-success" onclick="addToCart('${metaData.title}')" >Comprar artículo</button>
                     </div>
                     </div>
                 </div>
@@ -99,4 +40,46 @@ btnBuscar.addEventListener('click',function(e){
         .catch(error=> {console.error(error)});
 });
 
+
+function addToCart(title) {
+    // Verificar si el "carrito" ya existe en el Local Storage
+    if (localStorage.getItem("carrito")) {
+        // Obtener el "carrito" actual del Local Storage
+        let carrito = JSON.parse(localStorage.getItem("carrito"));
+
+        // Agregar el nuevo elemento al "carrito"
+        carrito.push(title);
+
+        // Guardar el "carrito" actualizado en el Local Storage
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+    } else {
+        // Si el "carrito" no existe, crear un nuevo arreglo con el elemento
+        let agregar = [title];
+
+        // Guardar el nuevo "carrito" en el Local Storage
+        localStorage.setItem("carrito", JSON.stringify(agregar));
+    }
+    displayCarrito();
+}
+
+function vaciarCarrito(){
+    localStorage.setItem('carrito', JSON.stringify([]));
+    displayCarrito();
+}
+
+function displayCarrito(){
+    
+    let contenedor = document.querySelector('#carritoContainer');
+    let carrito = localStorage.getItem('carrito');
+    contenedor.innerHTML='';
+    let carritoJSON=JSON.parse(carrito);
+    
+    carritoJSON.forEach(producto=>{
+        let lista = document.createElement('li');
+        lista.textContent = producto;
+        contenedor.appendChild(lista);
+    })
+}
+
+displayCarrito();
 
