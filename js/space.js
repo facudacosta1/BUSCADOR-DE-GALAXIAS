@@ -78,12 +78,13 @@ btnBuscar.addEventListener('click',function(e){
                 content += `
                 <div>
                     <div class="info-container">
-                        <img src="${imageUrl}" alt="${metaData.title}">
+                        <img class="w-100" src="${imageUrl}" alt="${metaData.title}">
                         <div>
                             <h5>${metaData.title}</h5>
                             <p>${metaData.description}</p>
                         <div>
-                        <small>Fecha: ${metaData.date_created}</small>
+                        <small>Fecha: ${metaData.date_created}</small> <br>
+                        <button class="btn btn-success">Comprar artículo</button>
                     </div>
                     </div>
                 </div>
@@ -97,3 +98,5 @@ btnBuscar.addEventListener('click',function(e){
     })
         .catch(error=> {console.error(error)});
 });
+
+
