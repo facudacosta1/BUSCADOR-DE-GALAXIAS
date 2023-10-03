@@ -42,21 +42,12 @@ btnBuscar.addEventListener('click',function(e){
 
 
 function addToCart(title) {
-    // Verificar si el "carrito" ya existe en el Local Storage
     if (localStorage.getItem("carrito")) {
-        // Obtener el "carrito" actual del Local Storage
         let carrito = JSON.parse(localStorage.getItem("carrito"));
-
-        // Agregar el nuevo elemento al "carrito"
         carrito.push(title);
-
-        // Guardar el "carrito" actualizado en el Local Storage
         localStorage.setItem('carrito', JSON.stringify(carrito));
     } else {
-        // Si el "carrito" no existe, crear un nuevo arreglo con el elemento
         let agregar = [title];
-
-        // Guardar el nuevo "carrito" en el Local Storage
         localStorage.setItem("carrito", JSON.stringify(agregar));
     }
     displayCarrito();
